@@ -1,0 +1,144 @@
+{% if settings.product-lookbook-show %}
+<div class="home-module-wrapper {{ settings.product-lookbook-style }} {% if settings.product-lookbook-borders %}borders{% endif %}">
+  <div class="home-module home-left-right-features">
+    <div class="fix-for-first-child">
+
+      {% for i in (1..6) %}
+        {% capture feature %}product-lookbook-show-left-right-{{ i }}{% endcapture %}
+        {% if settings[feature] %}
+
+          {% capture mediaAlignments %}product-lookbook-{{ i }}-media-alignments{% endcapture %}
+          {% capture media %}product-lookbook-{{ i }}-media{% endcapture %}
+      	  {% capture media2 %}product-lookbook-{{ i }}-{{ i }}-media{% endcapture %}
+          {% capture heading %}product-lookbook-{{ i }}-title{% endcapture %}
+          {% capture caption %}product-lookbook-{{ i }}-text{% endcapture %}
+          {% capture url %}product-lookbook-{{ i }}-url{% endcapture %}
+          {% capture cta %}product-lookbook-{{ i }}-cta{% endcapture %}
+          {% capture image %}product-lookbook-image-{{ i }}.jpg{% endcapture %}
+      	  {% capture image2 %}product-lookbook-image-{{ i }}-{{ i }}.jpg{% endcapture %}
+          {% capture video %}product-lookbook-{{ i }}-video{% endcapture %}
+      	  {% capture doubleimage %}product-lookbook-show-left-right-{{ i }}-double-img{% endcapture %}
+            
+            {% if i == 3 %}
+                <div class="home-left-right-feature clearfix media-aligned">
+                  <div class="home-left-right-media full-width">
+                      {% if settings[media] == 'image' %}
+                        <img alt="{{ settings[heading] | strip_html | escape }}" src="{{ image | asset_url }}">
+                      {% elsif settings[media] == 'video' %}
+                        <div class="home-left-right-video">{{ settings[video] }}</div>
+                      {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="home-left-right-feature clearfix media-aligned-{{ settings[mediaAlignments] }}">
+                {% if settings[mediaAlignments] %}
+                  {% if settings[mediaAlignments] == 'left' %}
+                      <img class="block-after-left" src="{{ 'blockquote__after-left.png' | asset_url }}">
+                  {% endif %}
+                  {% if settings[mediaAlignments] == 'right' %}
+                      <img class="block-after-right" src="{{ 'blockquote__after-right.png' | asset_url }}">
+                  {% endif %}
+                {% endif %}
+                {% if settings[mediaAlignments] == 'left' %}
+                  <div class="home-left-right-media">
+                    {% if settings[media] == 'image' %}
+                      <img alt="{{ settings[heading] | strip_html | escape }}" src="{{ image | asset_url }}">
+                    {% elsif settings[media] == 'video' %}
+                      <div class="home-left-right-video">{{ settings[video] }}</div>
+                    {% endif %}
+                  </div>
+                {% elsif settings[doubleimage] %}
+                  <div class="home-left-right-media">
+                    {% if settings[media] == 'image' %}
+                      <img alt="{{ settings[heading] | strip_html | escape }}" src="{{ image | asset_url }}">
+                    {% elsif settings[media] == 'video' %}
+                      <div class="home-left-right-video">{{ settings[video] }}</div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                {% if settings[doubleimage] %}
+                    <div class="home-left-right-media media-right">
+                      {% if settings[media2] == 'image' %}
+                          <img alt="{{ settings[heading] | strip_html | escape }}" src="{{ image2 | asset_url }}">
+                        {% elsif settings[media] == 'video' %}
+                          <div class="home-left-right-video">{{ settings[video] }}</div>
+                      {% endif %}
+                    </div>
+                {% else %}
+                    <div class="home-left-right-text">
+                      {% if settings[media2] == 'image' %}
+                          <img alt="{{ settings[heading] | strip_html | escape }}" src="{{ image2 | asset_url }}">
+                        {% elsif settings[media] == 'video' %}
+                          <div class="home-left-right-video">{{ settings[video] }}</div>
+                      {% else %}
+
+                      <div class="home-left-right-text-container">
+                        {% if settings[heading] != blank %}
+                          <h3>{{ settings[heading] }}</h3>
+                        {% endif %}
+                        <div class="rte">
+                          {{ settings[caption] }}
+
+                          {% if settings[url] != blank and settings[cta] != blank %}
+                            <p class="home-left-right-cta"><a href="{{ settings[url] }}">{{ settings[cta] }}</a></p>
+                          {% endif %}
+                        </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                {% endif %}
+
+                {% if settings[mediaAlignments] == 'right' %}
+                  <div class="home-left-right-media">
+                    {% if settings[media] == 'image' %}
+                      <img alt="{{ settings[heading] | strip_html | escape }}" src="{{ image | asset_url }}">
+                    {% elsif settings[media] == 'video' %}
+                      <div class="home-left-right-video">{{ settings[video] }}</div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+            
+        {% endif %}
+      {% endfor %}
+
+      {% unless settings.product-lookbook-show-left-right-1 or settings.product-lookbook-show-left-right-2 or settings.product-lookbook-show-left-right-3 or settings.product-lookbook-show-left-right-4 or settings.product-lookbook-show-left-right-5 or settings.product-lookbook-show-left-right-6 %}
+        <div class="home-left-right-feature clearfix media-aligned-right">
+
+          <div class="home-left-right-text">
+            <h3>{{ 'onboarding.alternating_features_section.feature_title' | t }}</h3>
+            <div class="rte">
+              {{ 'onboarding.alternating_features_section.text' | t }}
+              <p class="home-left-right-cta"><a href="{{ shop.url }}/admin/themes">{{ 'onboarding.theme_settings_link' | t }}</a></p>
+            </div>
+          </div>
+
+          <div class="home-left-right-media">
+            <img class="home-helper-image" alt="" src="{{ 'no-image.svg' | asset_url }}" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;">
+          </div>
+
+        </div>
+
+        <div class="home-left-right-feature clearfix media-aligned-left">
+
+          <div class="home-left-right-media">
+            <img class="home-helper-image" alt="" src="{{ 'no-image.svg' | asset_url }}" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;">
+          </div>
+
+          <div class="home-left-right-text">
+            <h3>{{ 'onboarding.alternating_features_section.feature_title' | t }}</h3>
+            <div class="rte">
+              {{ 'onboarding.alternating_features_section.text' | t }}
+              <p class="home-left-right-cta"><a href="{{ shop.url }}/admin/themes">{{ 'onboarding.theme_settings_link' | t }}</a></p>
+            </div>
+          </div>
+
+        </div>
+      {% endunless %}
+
+    </div>
+  </div>
+</div>
+{% endif %}

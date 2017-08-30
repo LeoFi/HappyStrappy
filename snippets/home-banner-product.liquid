@@ -1,0 +1,23 @@
+<div class="home-module-wrapper" {% if page.handle == 'unsere-story' %}style="margin-bottom:-70px!important;"{% endif %}>
+  <div class="home-module home-full-width-banner product-banner">
+	
+    <div class="home-module home-full-width-feature {{contentClass}}">
+      <div class="home-left-right-feature clearfix media-aligned-left">
+        <div class="home-left-right-media">
+      		<img src="{{ 'home-banner-product-image.jpg' | asset_url }}" title="Full width banner"/>
+        </div>
+      	<div class="home-left-right-text">
+          {% if settings.home-banner-product-description %}
+          <h3>{{settings.home-banner-product-description}}</h3>
+          {% endif %}
+          {% if settings.home-banner-product-price %}
+          <p>{{settings.home-banner-product-price}}</p>
+          {% endif %}
+          {% if settings.home-banner-product-cta %}
+           <a class="button primary" href="{{ settings.home-banner-product-url }}">{{ settings.home-banner-product-cta }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

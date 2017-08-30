@@ -1,0 +1,16 @@
+<div class="home-module-wrapper">
+  <div class="home-module home-full-width-banner">
+
+    <div class="full-width-img" style="background-image: url({{ 'home-full-width-banner-instagram-image.jpg' | asset_url }});">
+<!--       <img src="{{ 'home-full-width-banner-instagram-image.jpg' | asset_url }}" title="Full width banner"/> -->
+      <div class="banner-text">
+      {% if settings.home-full-width-banner-instagram-title %}
+        <h2>{{settings.home-full-width-banner-instagram-title}}</h2>
+        {% endif %}
+      </div>
+    </div>
+    {% if settings.home-full-width-banner-instagram-cta %}
+    	<p class="home-full-width-banner-instagram-cta"><a href="{{ settings.home-full-width-banner-instagram-url }}">{{ settings.home-full-width-banner-instagram-cta }}</a></p>
+    {% endif %}
+  </div>
+</div>

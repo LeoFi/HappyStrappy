@@ -1,0 +1,12 @@
+{% if product.variants.size > 1 %}
+      <div class="product-options-bundle">
+        <p class="framePrice-cart">{{product.title}}</p>
+        <select name="id[]" id="product-select" class="product-select-bundle">
+          {% for variant in product.variants %}
+          <option {% if forloop.length <= 1 and variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {% else %}
+      <input type="hidden" name="id" class="product-select" value="{{ product.variants[0].id }}" data-variant-title="{{ product.variants[0].title }}" />
+{% endif %}

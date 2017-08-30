@@ -1,0 +1,93 @@
+<div class="home-module-wrapper {{ settings.product-benefits-style }} {% if settings.product-benefits-borders %}borders{% endif %}">
+  <div class="home-module home-left-right-features">
+
+    <div class="fix-for-first-child">
+
+      {% for i in (1..2) %}
+        {% capture feature %}product-features-show-left-right-{{ i }}{% endcapture %}
+        {% if settings[feature] %}
+
+          {% capture mediaAlignment %}product-benefits-{{ i }}-media-alignment{% endcapture %}
+          {% capture media %}product-benefits-{{ i }}-media{% endcapture %}
+          {% capture heading %}product-benefits-{{ i }}-title{% endcapture %}
+          {% capture caption %}product-benefits-{{ i }}-text{% endcapture %}
+          {% capture url %}product-benefits-{{ i }}-url{% endcapture %}
+          {% capture cta %}product-benefits-{{ i }}-cta{% endcapture %}
+          {% capture image %}product-benefits-image-{{ i }}.jpg{% endcapture %}
+          {% capture video %}product-benefits-{{ i }}-video{% endcapture %}
+
+          <div class="home-left-right-feature clearfix media-aligned-{{ settings[mediaAlignment] }}">
+
+            {% if settings[mediaAlignment] == 'left' %}
+              <div class="home-left-right-media">
+                {% if settings[media] == 'image' %}
+                  <img alt="{{ settings[heading] | strip_html | escape }}" src="{{ image | asset_url }}">
+                {% elsif settings[media] == 'video' %}
+                  <div class="home-left-right-video">{{ settings[video] }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <div class="home-left-right-text">
+              {% if settings[heading] != blank %}
+                <h3>{{ settings[heading] }}</h3>
+              {% endif %}
+              <div class="rte">
+                {{ settings[caption] }}
+
+                {% if settings[url] != blank and settings[cta] != blank %}
+                  <p class="home-left-right-cta"><a href="{{ settings[url] }}">{{ settings[cta] }}</a></p>
+                {% endif %}
+              </div>
+            </div>
+
+            {% if settings[mediaAlignment] == 'right' %}
+              <div class="home-left-right-media">
+                {% if settings[media] == 'image' %}
+                  <img alt="{{ settings[heading] | strip_html | escape }}" src="{{ image | asset_url }}">
+                {% elsif settings[media] == 'video' %}
+                  <div class="home-left-right-video">{{ settings[video] }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      {% unless settings.product-benefits-show-left-right-1 or settings.product-benefits-show-left-right-2 %}
+        <div class="home-left-right-feature clearfix media-aligned-right">
+
+          <div class="home-left-right-text">
+            <h3>{{ 'onboarding.alternating_features_section.feature_title' | t }}</h3>
+            <div class="rte">
+              {{ 'onboarding.alternating_features_section.text' | t }}
+              <p class="home-left-right-cta"><a href="{{ shop.url }}/admin/themes">{{ 'onboarding.theme_settings_link' | t }}</a></p>
+            </div>
+          </div>
+
+          <div class="home-left-right-media">
+            <img class="home-helper-image" alt="" src="{{ 'no-image.svg' | asset_url }}" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;">
+          </div>
+
+        </div>
+
+        <div class="home-left-right-feature clearfix media-aligned-left">
+
+          <div class="home-left-right-media">
+            <img class="home-helper-image" alt="" src="{{ 'no-image.svg' | asset_url }}" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;">
+          </div>
+
+          <div class="home-left-right-text">
+            <h3>{{ 'onboarding.alternating_features_section.feature_title' | t }}</h3>
+            <div class="rte">
+              {{ 'onboarding.alternating_features_section.text' | t }}
+              <p class="home-left-right-cta"><a href="{{ shop.url }}/admin/themes">{{ 'onboarding.theme_settings_link' | t }}</a></p>
+            </div>
+          </div>
+
+        </div>
+      {% endunless %}
+
+    </div>
+  </div>
+</div>

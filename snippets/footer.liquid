@@ -1,0 +1,116 @@
+{% assign borderClass = '' %}
+{% if settings.background-color == settings.footer-background-color %}
+  {% unless settings.body-background-use-image or settings.footer-background-use-image %}
+    {% assign borderClass = 'default' %}
+  {% endunless %}
+{% endif %}
+
+<div class="footer-wrapper {{ borderClass }}">
+
+  {% assign linkListClass = 0 %}
+
+  {% if linklists[settings.footer-link-list-1].links.size > 0 %}
+    {% assign linkListClass = linkListClass | plus: 1 %}
+  {% endif %}
+  {% if linklists[settings.footer-link-list-2].links.size > 0 %}
+    {% assign linkListClass = linkListClass | plus: 2 %}
+  {% endif %}
+  {% if settings.social-facebook-url != blank or settings.social-twitter-url != blank or settings.social-google-plus-url != blank or settings.social-instagram-url != blank or settings.social-pinterest-url != blank or settings.social-vimeo-url != blank or settings.social-youtube-url != blank or settings.social-rss-url != blank %}
+    {% assign hasSocial = true %}
+    {% assign linkListClass = linkListClass | plus: 1 %}
+  {% endif %}
+
+  <footer class="main-footer showing-{{linkListClass}}-lists clearfix">
+    
+    <div role="contentinfo" class="copyright footer-module footer-link-list">
+      
+      <div class="contentinfo">
+        <div class="footer-branding">
+          {% if settings.use-logo %}
+            <a class="logo" href="/">
+
+              {% assign regularLogo = 'footer-logo.png' | asset_url %}
+              {% if fullBleedIndex and settings.home-bleed-use-logo %}
+                {% assign regularLogo = 'bleed-logo.png' | asset_url %}
+              {% elsif fullBleedProduct and settings.product-bleed-use-logo %}
+                {% assign regularLogo = 'product-bleed-logo.png' | asset_url %}
+              {% endif %}
+
+              <img class="logo-regular" alt="{{ shop.name | escape }}" src="{{ regularLogo }}" data-regular="{{ 'logo.png' | asset_url }}">
+            </a>
+          {% else %}
+            <h1><a href="/">{{ shop.name }}</a></h1>
+          {% endif %}
+        </div>
+        {% capture year %}{{ "now" | date: "%Y" }}{% endcapture %}
+        <p>{{ 'general.general.copyright_text_html' | t: year: year }}
+      </div>
+    </div>
+
+    {% for i in (1..2) %}
+      {% capture linkList %}footer-link-list-{{ i }}{% endcapture %}
+      {% if linklists[settings[linkList]].links.size > 0 %}
+        {% capture menu %}{{ settings[linkList] }}{% endcapture %}
+        <div class="footer-link-list {{ linklists[menu].handle }}">
+          {% if settings.footer-show-headers %}
+            <h4>{{ linklists[menu].title }}</h4>
+          {% endif %}
+
+          <ul>
+            {% for link in linklists[menu].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {% if hasSocial %}
+      {% include 'social-icons' %}
+    {% endif %}
+    
+    {% comment %}{% if settings.display-mailing-list %}
+      {% include 'mailing-list' %}
+    {% endif %}{% endcomment %}
+
+    {% if settings.show-share-buttons %}
+    <div class="spread-the-word">
+      {% if settings.footer-show-headers %}
+        <h4>{{ 'general.social.share_title' | t }}</h4>
+      {% endif %}
+
+      {% capture byline %}{{ 'general.social.byline' | t }}{% endcapture %}
+      {% if byline != blank %}
+        <p>{{ 'general.social.byline' | t }}</p>
+      {% endif %}
+
+      {% if settings.footer-show-pin %}
+        {% assign pinterestImage = '' %}
+
+        {% if template contains 'product' %}
+          {% assign pinterestImage = product.featured_image | product_img_url: 'grande' %}
+        {% elsif template contains 'article' %}
+          {% assign img_tag = '<' | append: 'img' %}
+          {% if article.content contains img_tag %}
+            {% assign src = article.content | split: 'src="' %}
+            {% assign src = src[1] | split: '"' | first %}
+            {% assign pinterestImage = src %}
+          {% endif %}
+        {% else %}
+          {% if settings.use-logo and pinterestImage == '' %}
+            {% assign pinterestImage = 'logo.png' | asset_url %}
+          {% endif %}
+        {% endif %}
+      {% endif %}
+
+	  {% comment %}<a class="footer-share-icon footer-tweet" href="//twitter.com/share?url={{ shop.url }}" target="_blank">{{ 'general.social.twitter' | t }}</a>{% endcomment %}
+      <a class="footer-share-icon footer-like" href="//www.facebook.com/sharer.php?u={{ shop.url }}" target="_blank">{{ 'general.social.facebook' | t }}</a>
+      <a class="footer-share-icon footer-pin" href="//pinterest.com/pin/create/button/?url={{ shop.url }}&amp;media={{ pinterestImage }}&amp;description={{ shop.name }}" target="_blank">{{ 'general.social.pinterest' | t }}</a>
+      <a class="footer-share-icon footer-plus" href="//plus.google.com/share?url={{ shop.url }}" target="_blank">{{ 'general.social.google' | t }}</a>
+      <a class="footer-share-icon footer-fancy" href="//www.thefancy.com/fancyit?ItemURL={{ shop.url }}&amp;Title={{ shop.name }}" target="_blank">{{ 'general.social.fancy' | t }}</a>
+    </div>
+    {% endif %}
+
+  </footer>
+
+</div>

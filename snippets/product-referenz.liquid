@@ -1,0 +1,44 @@
+<div class="home-module-wrapper {% if settings.product-referenz-borders %}borders{% endif %}">
+  <div class="home-module home-left-right-features">
+
+    <div class="fix-for-first-child">
+
+      <div class="home-left-right-feature clearfix media-aligned-{{ settings.product-referenz-1-media-alignment }}">
+
+        {% if settings.product-referenz-1-media-alignment == 'left' %}
+        <div class="home-left-right-media">
+          {% if settings.product-referenz-1-media == 'image' %}
+          <img alt="{{ settings.product-referenz-1-title | strip_html | escape }}" src="{{ 'product-referenz-image-1.jpg' | asset_url }}">
+          {% elsif settings.product-referenz-1-media == 'video' %}
+          <div class="home-left-right-video">{{ settings.product-referenz-1-video }}</div>
+          {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="home-left-right-text">
+          {% if settings.product-referenz-1-title != blank %}
+          <h3>{{ settings.product-referenz-1-title }}</h3>
+          {% endif %}
+          <div class="rte">
+            {{ settings.product-referenz-1-text }}
+
+            {% if settings.product-referenz-1-url != blank and settings.product-referenz-1-cta != blank %}
+            <p class="home-left-right-cta"><a href="{{ settings.product-referenz-1-url }}">{{ settings.product-referenz-1-cta }}</a></p>
+            {% endif %}
+          </div>
+        </div>
+
+        {% if settings.product-referenz-1-media-alignment == 'right' %}
+        <div class="home-left-right-media">
+          {% if settings.product-referenz-1-media == 'image' %}
+          <img alt="{{ settings.product-referenz-1-title | strip_html | escape }}" src="{{ 'product-referenz-image-1.jpg' | asset_url }}">
+          {% elsif settings.product-referenz-1-media == 'video' %}
+          <div class="home-left-right-video">{{ settings.product-referenz-1-video }}</div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>

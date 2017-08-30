@@ -1,0 +1,58 @@
+
+
+<div class="main-slideshow-wrapper">
+  
+  <div class="slideshow-loader"></div>
+  
+  <div class="slide-container">
+
+  {% assign slideCount = 0 %}
+    {% for i in (1..5) %}
+      {% capture slide %}show-slide-{{ i }}{% endcapture %}
+      {% if settings[slide] %}
+        {% capture slideCTA %}slide-{{ i }}-cta{% endcapture %}
+        {% capture slideURL %}slide-{{ i }}-url{% endcapture %}
+        {% capture slideTitle %}slide-{{ i }}-title{% endcapture %}
+        {% capture slideSubtitle %}slide-{{ i }}-subtitle{% endcapture %}
+        {% capture slideSmallText %}slide-{{ i }}-small-text{% endcapture %}
+        {% capture slideTextAlignment %}slide-{{ i }}-text-alignment{% endcapture %}
+        {% capture slideImage %}slide-{{ i }}-image.jpg{% endcapture %}
+
+        <div class="home-slide home-slide-{{ i }} text-aligned-{{ settings[slideTextAlignment] }}" {% if settings.slideshow-layout == 'opening-screen' %}style="background-image: url({{ slideImage | asset_url }});"{% endif %}>
+
+            <div class="item"  style="background-image: url({{ slideImage | asset_url }});">
+
+              {% if settings[slideTitle] != blank or settings[slideSubtitle] != blank or settings[slideSmallText] != blank or settings[slideCTA] != blank %}
+                {% if settings[slideCTA] == blank and settings[slideURL] != blank %}<a href="{{ settings[slideURL] }}">{% endif %}
+                  <div class="slide-text {% if settings.slideshow-text-shadows %}slide-text-use-shadows{% endif %}">
+                    {% if settings[slideTitle] != blank %}
+                      <h2>{{ settings[slideTitle] }}</h2>
+                    {% endif %}
+
+                    {% if settings[slideSubtitle] != blank %}
+                      <h3>{{ settings[slideSubtitle] }}</h3>
+                    {% endif %}
+
+                    {% if settings[slideSmallText] != blank %}
+                      <p>{{ settings[slideSmallText] }}</p>
+                    {% endif %}
+
+                    {% if settings[slideCTA] != blank and settings[slideURL] != blank %}
+                      <a class="button" href="{{ settings[slideURL] }}">{{ settings[slideCTA] }}</a>
+                    {% endif %}
+
+                    {% if settings.cta-extra != blank %}
+                      <span class="cta-extra">{{ settings.cta-extra }}</span>
+                    {% endif %}
+                  </div>
+                {% if settings[slideCTA] == blank and settings[slideURL] != blank %}</a>{% endif %}
+              {% endif %}
+              
+          </div>
+
+          </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  
+</div>
